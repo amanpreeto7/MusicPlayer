@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : AppCompatActivity() {
     var permission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
@@ -22,9 +23,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     var musicList = ArrayList<MusicContent>()
+    lateinit var musicViewModel: MusicViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        musicViewModel = ViewModelProvider(this)[MusicViewModel::class.java]
     }
 
     override fun onResume() {
@@ -59,6 +62,8 @@ class MainActivity : AppCompatActivity() {
                     cursor.moveToNext()
                 }
             }
+            musicViewModel.musicContentList.value = musicList
+
         }
 
     }

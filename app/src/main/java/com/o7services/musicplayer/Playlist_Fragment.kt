@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.o7services.musicplayer.databinding.FragmentPlaylistBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +25,8 @@ class Playlist_Fragment : Fragment() {
     private var param2: String? = null
     lateinit var recyclerAdapter: RecyclerAdapter
     lateinit var mainActivity: MainActivity
+    lateinit var binding: FragmentPlaylistBinding
+    lateinit var musicViewModel: MusicViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +42,22 @@ class Playlist_Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_playlist_, container, false)
+        binding = FragmentPlaylistBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recyclerAdapter = RecyclerAdapter()
+        binding.recycler.layoutManager = LinearLayoutManager(mainActivity)
+        binding.recycler.adapter = recyclerAdapter
+
+        musicViewModel = ViewModelProvider(mainActivity)[MusicViewModel::class.java]
+
+
+        musicViewModel.musicContentList.observe(mainActivity){
+            recyclerAdapter.updateList(it)
+        }
     }
 
     companion object {
