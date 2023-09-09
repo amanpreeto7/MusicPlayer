@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navgraph"
-    app:startDestination="@id/playMusic_Fragment">
+    app:startDestination="@id/playlist_Fragment">
     <fragment
         android:id="@+id/playMusic_Fragment"
         android:name="com.o7services.musicplayer.PlayMusic_Fragment"
