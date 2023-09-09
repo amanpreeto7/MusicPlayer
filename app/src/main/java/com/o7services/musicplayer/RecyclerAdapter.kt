@@ -5,7 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.o7services.musicplayer.databinding.RecyclerviewBinding
 
-class RecyclerAdapter(): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+interface MusicClick{
+    fun OnSongPlayClick(musicContent: MusicContent)
+}
+class RecyclerAdapter(var musicClick : MusicClick): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     var musicContent: ArrayList<MusicContent> = arrayListOf()
     class ViewHolder(var view: RecyclerviewBinding): RecyclerView.ViewHolder(view.root) {}
 
@@ -18,6 +21,7 @@ class RecyclerAdapter(): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.view.musicContent = musicContent[position]
+        holder.view.musicClick = musicClick
     }
 
     fun updateList( musicContent: ArrayList<MusicContent>){
@@ -25,4 +29,5 @@ class RecyclerAdapter(): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
         this.musicContent.addAll(musicContent)
         notifyDataSetChanged()
     }
+
 }

@@ -4,6 +4,9 @@
         <variable
             name="musicContent"
             type="com.o7services.musicplayer.MusicContent" />
+        <variable
+            name="musicClick"
+            type="com.o7services.musicplayer.MusicClick" />
     </data>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -30,6 +33,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/ivPlayPause"
         android:padding="10dp"
+        android:onClick="@{()->musicClick.OnSongPlayClick(musicContent)}"
         android:src="@drawable/ic_play"/>
 
 </LinearLayout>

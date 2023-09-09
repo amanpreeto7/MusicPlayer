@@ -1,6 +1,9 @@
 package com.o7services.musicplayer
 
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [Playlist_Fragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Playlist_Fragment : Fragment() {
+class Playlist_Fragment : Fragment(), MusicClick {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -48,7 +51,7 @@ class Playlist_Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerAdapter = RecyclerAdapter()
+        recyclerAdapter = RecyclerAdapter(this)
         binding.recycler.layoutManager = LinearLayoutManager(mainActivity)
         binding.recycler.adapter = recyclerAdapter
 
@@ -78,5 +81,15 @@ class Playlist_Fragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun OnSongPlayClick(musicContent: MusicContent) {
+        System.out.print("musicContent.storageLocation ${musicContent.storageLocation}")
+        Log.e("TAG", "musicContent.storageLocation ${musicContent.storageLocation}")
+        if(mainActivity.mediaPlayer.isPlaying){
+            mainActivity.mediaPlayer.stop()
+        }
+        mainActivity.mediaPlayer = MediaPlayer.create(mainActivity, Uri.parse(musicContent.storageLocation))
+        mainActivity.mediaPlayer.start()
     }
 }

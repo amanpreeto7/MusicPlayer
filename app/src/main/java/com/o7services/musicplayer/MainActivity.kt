@@ -2,6 +2,7 @@ package com.o7services.musicplayer
 
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -19,11 +20,12 @@ class MainActivity : AppCompatActivity() {
             //go to setting
             //exit finish
         }
-
     }
 
     var musicList = ArrayList<MusicContent>()
     lateinit var musicViewModel: MusicViewModel
+    var mediaPlayer: MediaPlayer = MediaPlayer()
+    var currentPlayingPosition = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
