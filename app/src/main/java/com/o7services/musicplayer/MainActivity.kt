@@ -46,13 +46,18 @@ class MainActivity : AppCompatActivity() {
         val cursor: Cursor? = contentResolver?.query(uri, null,
             selection, null, null)
         if(cursor != null) {
-            while (cursor?.moveToFirst() == true) {
-                musicList.add(
-                    MusicContent(title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
-                    duration = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)),
-                    artistName = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
-                storageLocation = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)))
-                )
+            if (cursor?.moveToFirst() == true) {
+                while(cursor.isLast == false) {
+                    musicList.add(
+                        MusicContent(
+                            title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
+                            duration = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)),
+                            artistName = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)),
+                            storageLocation = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
+                        )
+                    )
+                    cursor.moveToNext()
+                }
             }
         }
 
